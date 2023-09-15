@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "386135674416",
+    "project_id": "dewdrop-a17a5",
+    "storage_bucket": "dewdrop-a17a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386135674416:android:32676ee1e2e334535867f5",
+        "android_client_info": {
+          "package_name": "com.example.dewdrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386135674416-5mnvjoa78p1slfff68g0uqsla019k6ni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlvWTvrvk9DwoYu7-yjgxhVg9atauLJ9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386135674416-5mnvjoa78p1slfff68g0uqsla019k6ni.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "386135674416-nrtcruj02uijbsjfr7n5uaml2t2tq1qd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dewdrop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
