@@ -199,6 +199,17 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 130,
             ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const DeviceSetupScreen()
+                      )
+                  );
+                },
+                child: Text('Go Home')
+            )
           ],
         ),
       ),

@@ -48,17 +48,15 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Expanded(
-              child: SizedBox(
-                height: screenHeight * 0.9,
-                child: ListView.builder(
-                    itemCount: devices.length,
-                    // itemBuilder: (_, index) => UserProductItem(productsData.items[index].title, productsData.items[index].imageUrl)
-                    itemBuilder: (_, index) =>
-                        DeviceDetail(btdevice: devices[index])
-                ),
-              ),
+          SizedBox(
+            height: screenHeight * 0.9,
+            // Note: ListView already contains scrolling functionality.
+            // No need to wrap it with SingleChildScrollView.
+            child: ListView.builder(
+                itemCount: devices.length,
+                // itemBuilder: (_, index) => UserProductItem(productsData.items[index].title, productsData.items[index].imageUrl)
+                itemBuilder: (_, index) =>
+                    DeviceDetail(btdevice: devices[index])
             ),
           ),
         ],

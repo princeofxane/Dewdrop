@@ -14,6 +14,7 @@ class DeviceDetail extends StatefulWidget {
 }
 
 class _DeviceDetailState extends State<DeviceDetail> {
+  bool _expanded = false;
 
 
   @override
@@ -23,46 +24,68 @@ class _DeviceDetailState extends State<DeviceDetail> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15)
       ),
-      borderOnForeground: true,
-      elevation: 10,
+      // borderOnForeground: true,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ExpansionPanelList(
+          animationDuration: Duration(milliseconds: 1000),
           children: [
-            /* ---------- Device details ---------- */
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Column(
+            ExpansionPanel(
+              headerBuilder: (context, isExpanded) {
+                return Row(
+                  children: [
+                    Text('data'),
+                    InkWell(
+                      onTap: (){},
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent)
+                        ),
+                        child: Text('info'),
+                      ),
+                    )
+                  ],
+                );
+              },
+              body: Column(
                 children: [
-                  Text('Name: ${widget.btdevice.name}'),
-                  // Text('IpAddress: ${widget.btdevice.ipAddress}'),
-                  // Text('MacAddress: ${widget.btdevice.macAddress}'),
+                  Text('Sample description about the device'),
+                  OverflowBar(
+                    children: [
+                      CustomFunctionButtons(
+                        text: 'Schedule',
+                        icon: Icons.calendar_month
+                      ),
+                      CustomFunctionButtons(
+                        text: 'Info',
+                        icon: Icons.info_outline,
+                        fn: ()=>customShowDialog(context, widget.btdevice)),
+                      CustomFunctionButtons(
+                        text: 'Test',
+                        icon: Icons.play_circle_outline
+                      )
+                    ],
+                  )
                 ],
               ),
-            ),
-            // Spacer(),
-            /* ---------- Function buttons ---------- */
-            CustomFunctionButtons(
-              text: 'Schedule',
-              icon: Icons.calendar_month
-            ),
-            CustomFunctionButtons(
-                text: 'Info',
-                icon: Icons.info_outline,
-                fn: () => customShowDialog(context, widget.btdevice),
-            ),
-            // CustomFunctionButtons(
-            //     text: 'Test',
-            //     icon: Icons.play_circle_outline
-            // ),
+              isExpanded: _expanded,
+              canTapOnHeader: true,
+            )
           ],
-        ),
+          elevation: 0,
+          expansionCallback: (panelIndex, isExpanded) {
+            _expanded = !_expanded;
+            setState(() {
+
+            });
+          },
+        )
       )
     );
   }
 }
 
+// customShowDialog shows a popup window to edit information.
 void customShowDialog(BuildContext context, BTDevice btdevice) {
   showDialog(
     context: context,

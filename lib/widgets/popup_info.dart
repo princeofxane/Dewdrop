@@ -40,132 +40,140 @@ class _PopupInfoState extends State<PopupInfo> {
               // ),
             ],
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TextFormFieldDesign(
-                        textFormField: TextFormField(
-                          // If the name is available condition.
+          Expanded(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: 400,
+                child: Column(
+                  children: [
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          TextFormFieldDesign(
+                            textFormField: TextFormField(
+                              // If the name is available condition.
 
-                          /* ---------- Name ---------- */
-                          decoration: widget.btdevice.name == ""
-                              ? const InputDecoration(
-                                  // icon: const Icon(Icons.person),
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your name',
-                                  labelText: 'Name',
-                                )
-                              : const InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: 'Name',
-                                ),
-                          initialValue: widget.btdevice.name,
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      /* ---------- IP Address ---------- */
-                      TextFormFieldDesign(
-                        textFormField: TextFormField(
-                          // style: const TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            // icon: const Icon(Icons.person),
-                            // hintText: 'Enter your name',
-                            border: InputBorder.none,
-                            labelText: 'IP Address',
+                              /* ---------- Name ---------- */
+                              decoration: widget.btdevice.name == ""
+                                  ? const InputDecoration(
+                                // icon: const Icon(Icons.person),
+                                border: InputBorder.none,
+                                hintText: 'Enter your name',
+                                labelText: 'Name',
+                              )
+                                  : const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Name',
+                              ),
+                              initialValue: widget.btdevice.name,
+                              // The validator receives the text that the user has entered.
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
-                          initialValue: widget.btdevice.ipAddress,
-                          readOnly: true,
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      /* ---------- Mac Address ---------- */
-                      TextFormFieldDesign(
-                        textFormField: TextFormField(
-                          // style: const TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            // icon: const Icon(Icons.person),
-                            // hintText: 'Enter your name',
+                          /* ---------- IP Address ---------- */
+                          TextFormFieldDesign(
+                            textFormField: TextFormField(
+                              // style: const TextStyle(color: Colors.black),
+                              decoration: const InputDecoration(
+                                // icon: const Icon(Icons.person),
+                                // hintText: 'Enter your name',
+                                border: InputBorder.none,
+                                labelText: 'IP Address',
+                              ),
+                              initialValue: widget.btdevice.ipAddress,
+                              readOnly: true,
+                              // The validator receives the text that the user has entered.
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          /* ---------- Mac Address ---------- */
+                          TextFormFieldDesign(
+                            textFormField: TextFormField(
+                              // style: const TextStyle(color: Colors.black),
+                              decoration: const InputDecoration(
+                                // icon: const Icon(Icons.person),
+                                // hintText: 'Enter your name',
 
-                            border: InputBorder.none,
-                            labelText: 'Mac Address',
+                                border: InputBorder.none,
+                                labelText: 'Mac Address',
+                              ),
+                              initialValue: widget.btdevice.macAddress,
+                              readOnly: true,
+                              // The validator receives the text that the user has entered.
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
-                          initialValue: widget.btdevice.macAddress,
-                          readOnly: true,
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
+                          /* ---------- Description ---------- */
+                          TextFormFieldDesign(
+                            textFormField: TextFormField(
+                              decoration: widget.btdevice.description == ""
+                                  ? const InputDecoration(
+                                // icon: const Icon(Icons.person),
+                                border: InputBorder.none,
+                                hintText: 'Enter the description',
+                                labelText: 'Description',
+                              )
+                                  : const InputDecoration(
+                                // icon: const Icon(Icons.person),
+                                // hintText: 'Enter your name',
+                                border: InputBorder.none,
+                                labelText: 'Description',
+                              ),
+                              initialValue: widget.btdevice.description,
+                              // The validator receives the text that the user has entered.
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Validate returns true if the form is valid, or false otherwise.
+                                if (_formKey.currentState!.validate()) {
+                                  // If the form is valid, display a snackbar. In the real world,
+                                  // you'd often call a server or save the information in a database.
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Processing Data')),
+                                  );
+                                }
+                              },
+                              child: const Text('Submit'),
+                            ),
+                          ),
+                        ],
                       ),
-                      /* ---------- Description ---------- */
-                      TextFormFieldDesign(
-                        textFormField: TextFormField(
-                          decoration: widget.btdevice.description == ""
-                              ? const InputDecoration(
-                                  // icon: const Icon(Icons.person),
-                                  border: InputBorder.none,
-                                  hintText: 'Enter the description',
-                                  labelText: 'Description',
-                                )
-                              : const InputDecoration(
-                                  // icon: const Icon(Icons.person),
-                                  // hintText: 'Enter your name',
-                                  border: InputBorder.none,
-                                  labelText: 'Description',
-                                ),
-                          initialValue: widget.btdevice.description,
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false otherwise.
-                            if (_formKey.currentState!.validate()) {
-                              // If the form is valid, display a snackbar. In the real world,
-                              // you'd often call a server or save the information in a database.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Processing Data')),
-                              );
-                            }
-                          },
-                          child: const Text('Submit'),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                    )
+                  ],
+                ),
+              ),
+              /* ---------- Construct your form here. ---------- */
             ),
-            /* ---------- Construct your form here. ---------- */
           ),
         ]));
   }
@@ -201,60 +209,68 @@ class NetworkCoverageDesign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(5),
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent)
-          ),
-          child: IntrinsicHeight(
-            child: Row(
-              children: const [
-                // Each bars.
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: Card(
-                      color: Colors.red,
-                    ),
+    return Container(
+      width: 50,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.blueAccent)
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // Each bars.
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 8,
+                height: 10,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: 15,
-                    height: 20,
-                    child: Card(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: 15,
-                    height: 30,
-                    child: Card(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: 15,
-                    height: 40,
-                    child: Card(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ));
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 8,
+                height: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.red
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 8,
+                height: 30,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.red
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 8,
+                height: 40,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.red
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -273,9 +289,72 @@ class BatteryStrengthDesign extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      width: 30,
+      width: 25,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.blueAccent)
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 7,
+            width: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  // color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(3),
+                topRight: Radius.circular(3)),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+            width: 25,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  // color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(3),
+                topRight: Radius.circular(3)),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+            width: 25,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  // color: Colors.blue
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+            width: 25,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  color: Colors.blue
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+            width: 25,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(3),
+                bottomRight: Radius.circular(3)),
+              ),
+            ),
+          ),
+        ],
       ),
 
     );
