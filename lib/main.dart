@@ -1,6 +1,7 @@
 import 'package:dewdrop/firebase_options.dart';
 import 'package:dewdrop/models/bt_device.dart';
-import 'package:dewdrop/screens/device_setup.dart';
+import 'package:dewdrop/models/segment.dart';
+import 'package:dewdrop/screens/device_and_segment_setup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (ctx) => BTDevices()
+        ),
+        ChangeNotifierProvider(
+            create: (ctx) => Segments()
         ),
       ],
       child: MaterialApp(

@@ -19,7 +19,6 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15)
