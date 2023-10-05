@@ -1,10 +1,11 @@
 import 'package:dewdrop/models/bt_device.dart';
 import 'package:dewdrop/models/segment.dart';
+import 'package:dewdrop/screens/primary_segment_edit.dart';
 import 'package:dewdrop/widgets/device_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/segment_card.dart';
+import '../widgets/sub_segment_card.dart';
 
 class DeviceSetupScreen extends StatefulWidget {
   static const routeName = '/device_setup-screen';
@@ -54,7 +55,7 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                 tabIndex = tabIndx;
               });
             },
-            tabs: [
+            tabs: const [
               Tab(text: 'Device Setup'),
               Tab(text: 'Segment Setup'),
             ],
@@ -91,94 +92,161 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
               ],
             ),
           /* ---------- Segment Setup Screen ---------- */
-            Column(
-              children: [
-                /* ---------- Segment Dropdown List ---------- */
-                Row(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: screenWidth * 0.8,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(26),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /* ---------- Text: Primary Segment and Add button ---------- */
+                  Container(
+                    width: screenWidth * 0.7,
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(color: Colors.blue)
+                    // ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 10,
+                            ),
+                            child: Text('Primary Segments'),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                          },
                           child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 36,
-                                hint: Text('Select a Segment'),
-                                isExpanded: true,
-                                // onChanged: (_)=>{},
-                                value: valueChoose,
-                                onChanged: (Segment? newValue) {
-                                  setState(() {
-                                    if (newValue == null) return;
-                                    valueChoose = newValue;
-                                    subSegments =
-                                        segments[segments.indexOf(newValue)]
-                                            .subsegments;
-                                  });
-                                },
-                                items: segments.map((segment) {
-                                  return DropdownMenuItem(
-                                      value: segment, child: Text(segment.name));
-                                }).toList(),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(20)
                               ),
+                              child: Icon(Icons.add)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(),
+                  /* ---------- Segment Dropdown List ---------- */
+                  Container(
+                    width: screenWidth * 0.7,
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    // width: screenWidth * 0.7,
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          width: screenWidth * 0.5,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(10),
+                              icon: Icon(Icons.arrow_drop_down),
+                              iconSize: 36,
+                              hint: Text('Select a Segment'),
+                              // isExpanded: true,
+                              // onChanged: (_)=>{},
+                              value: valueChoose,
+                              onChanged: (Segment? newValue) {
+                                setState(() {
+                                  if (newValue == null) return;
+                                  valueChoose = newValue;
+                                  subSegments =
+                                      segments[segments.indexOf(newValue)]
+                                          .subsegments;
+                                });
+                              },
+                              items: segments.map((segment) {
+                                return DropdownMenuItem(
+                                    value: segment, child: Text(segment.name));
+                              }).toList(),
                             ),
                           ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => PrimarySegmentEdit(
+                                      segment: segments[segmentIndex]
+                                    )
+                                )
+                            );
+                          },
+                          child: Container(
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Icon(Icons.edit)),
+                        ),
+                      ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        print('edit');
-                      },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blueAccent)),
-                          child: Icon(Icons.edit)),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        print('edit');
-                      },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blueAccent)),
-                          child: Icon(Icons.add)),
-                    ),
-                  ],
-                ),
-                /* ---------- Title ---------- */
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 10,
-                    ),
-                    child: Text('Sub Segments'),
                   ),
-                ),
-                /* ---------- Sub Segment List ---------- */
-                SizedBox(
-                  height: screenHeight * 0.3,
-                  child: ListView.builder(
-                    // Get segment length for preset segments.
-                    itemCount: subSegments.length,
-                    itemBuilder: (_, index) {
-                      return SubSegmentDetail(subsegment: subSegments[index]);
-                    }
+                  /* ---------- Text: Sub Segment and Add button ---------- */
+                  Container(
+                    width: screenWidth * 0.7,
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(color: Colors.blue)
+                    // ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 10,
+                            ),
+                            child: Text('Sub Segments'),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print('edit');
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Icon(Icons.add)),
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  Divider(),
+                  /* ---------- Sub Segment List ---------- */
+                  Container(
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: Colors.red),
+                    //     borderRadius: BorderRadius.circular(20)
+                    // ),
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    width: screenWidth * 0.7,
+                    height: screenHeight * 0.5,
+                    child: ListView.builder(
+                      // Get segment length for preset segments.
+                      itemCount: subSegments.length,
+                      itemBuilder: (_, index) {
+                        return SubSegmentDetail(subsegment: subSegments[index]);
+                      }
+                    ),
+                  )
+                ],
+              ),
             )
         ]),
         floatingActionButton: tabIndex == 0 ?

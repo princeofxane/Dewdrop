@@ -2,17 +2,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/bt_device.dart';
 import '../models/schedule.dart';
+import 'package:collection/collection.dart';
 
 class Segment {
   final String id;
-  final String name;
+  String name;
   final bool isPreset;
+  bool isWorkersActive;
   List<SubSegment> subsegments;
 
   Segment({
     required this.id,
     required this.name,
     required this.isPreset,
+    required this.isWorkersActive,
     required this.subsegments
   });
 }
@@ -42,6 +45,7 @@ class Segments with ChangeNotifier{
       id: 'ef12',
       name: 'House',
       isPreset: true,
+      isWorkersActive: true,
       subsegments: [
         SubSegment(
           id: 'hi12',
@@ -95,6 +99,7 @@ class Segments with ChangeNotifier{
         id: 'ef13',
         name: 'Office',
         isPreset: true,
+        isWorkersActive: true,
         subsegments: [
           SubSegment(
               id: 'hi12',
@@ -125,6 +130,7 @@ class Segments with ChangeNotifier{
         id: 'ef14',
         name: 'Farm1',
         isPreset: true,
+        isWorkersActive: true,
         subsegments: [
           SubSegment(
               id: 'hi12',
@@ -179,4 +185,35 @@ class Segments with ChangeNotifier{
   List<Segment> get getSegments {
     return [... segments];
   }
+
+  bool toggleWorker(String id, bool value) {
+    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+    eachSegment.id == id,
+    );
+
+    if (segment == null) {
+      return false;
+    }
+
+    segment.isWorkersActive = value;
+
+    return true;
+  }
+
+  bool changeName(String id, String name) {
+    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+      eachSegment.id == id,
+    );
+
+    if (segment == null) {
+      return false;
+    }
+
+    segment.name = name;
+
+    return true;
+  }
 }
+// if (eachSegment.id == id) {
+// eachSegment.name = name;
+// }
