@@ -2,17 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/bt_device.dart';
 import '../models/schedule.dart';
+import 'package:collection/collection.dart';
+import 'dart:math';
+
+/* ---------- random string generator ---------- */
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+Random _rnd = Random();
+
+String getRandomString(int length) => String.fromCharCodes(
+  Iterable.generate(
+    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))
+  )
+);
+/* --------------------------------------------- */
 
 class Segment {
   final String id;
-  final String name;
-  final bool isPreset;
+  String name;
+  bool isWorkersActive;
   List<SubSegment> subsegments;
 
   Segment({
     required this.id,
     required this.name,
-    required this.isPreset,
+    required this.isWorkersActive,
     required this.subsegments
   });
 }
@@ -41,7 +54,7 @@ class Segments with ChangeNotifier{
     Segment(
       id: 'ef12',
       name: 'House',
-      isPreset: true,
+      isWorkersActive: true,
       subsegments: [
         SubSegment(
           id: 'hi12',
@@ -94,7 +107,7 @@ class Segments with ChangeNotifier{
     Segment(
         id: 'ef13',
         name: 'Office',
-        isPreset: true,
+        isWorkersActive: true,
         subsegments: [
           SubSegment(
               id: 'hi12',
@@ -124,7 +137,7 @@ class Segments with ChangeNotifier{
     Segment(
         id: 'ef14',
         name: 'Farm1',
-        isPreset: true,
+        isWorkersActive: true,
         subsegments: [
           SubSegment(
               id: 'hi12',
@@ -179,4 +192,82 @@ class Segments with ChangeNotifier{
   List<Segment> get getSegments {
     return [... segments];
   }
+
+  bool toggleWorker(String id, bool value) {
+    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+    eachSegment.id == id,
+    );
+
+    if (segment == null) {
+      return false;
+    }
+
+    segment.isWorkersActive = value;
+
+    return true;
+  }
+
+  bool changeName(String id, String name) {
+    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+      eachSegment.id == id,
+    );
+
+    if (segment == null) {
+      return false;
+    }
+
+    segment.name = name;
+
+    return true;
+  }
+
+  bool ifSegmentExist(String id) {
+    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+    eachSegment.id == id,
+    );
+
+    if (segment == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
+  bool deleteSegment(String id) {
+
+    print('===================');
+    print('Before delete array');
+    print(segments.map((e) => print(e.name)));
+    print('===================');
+
+    segments.removeWhere((eachSegment) =>
+    eachSegment.id == id,
+    );
+
+    print('===================');
+    print('After delete array');
+    print(segments.map((e) => print(e.name)));
+    print('===================');
+
+    notifyListeners();
+    return true;
+  }
+
+    bool createSegment(String segmentName) {
+
+    Segment newSegment = Segment(
+      id: getRandomString(5),
+      name: segmentName,
+      subsegments: <SubSegment>[],
+      isWorkersActive: false
+    );
+
+    segments.add(newSegment);
+    notifyListeners();
+    return true;
+  }
 }
+// if (eachSegment.id == id) {
+// eachSegment.name = name;
+// }

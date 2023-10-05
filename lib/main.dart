@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'screens/login.dart';
 import 'package:provider/provider.dart';
+import 'utility/device_information.dart' as utility;
+import 'screens/primary_segment_edit.dart';
 
 
 Future<void> main() async{
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -35,11 +38,19 @@ class MyApp extends StatelessWidget {
         title: 'Home Automation',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          dividerTheme: DividerThemeData(
+            space: 3,
+            thickness: 1,
+            indent: 10,
+            endIndent: 520,
+            color: Colors.black,
+          )
         ),
         home: const LaunchScreen(),
         routes: {
           LoginScreen.routeName: (ctx) => LoginScreen(),
-          DeviceSetupScreen.routeName: (ctx) => DeviceSetupScreen()
+          DeviceSetupScreen.routeName: (ctx) => DeviceSetupScreen(),
+          // PrimarySegmentEdit.routeName: (ctx) => PrimarySegmentEdit(segment: Segment)
         }
       ),
     );

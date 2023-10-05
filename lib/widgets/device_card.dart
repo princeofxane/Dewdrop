@@ -58,7 +58,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
                       CustomFunctionButtons(
                         text: 'Info',
                         icon: Icons.info_outline,
-                        fn: ()=>customShowDialog(context, widget.btdevice)),
+                        fn: ()=>deviceInfoPopUp(context, widget.btdevice)),
                       CustomFunctionButtons(
                         text: 'Test',
                         icon: Icons.play_circle_outline
@@ -84,8 +84,8 @@ class _DeviceDetailState extends State<DeviceDetail> {
   }
 }
 
-// customShowDialog shows a popup window to edit information.
-void customShowDialog(BuildContext context, BTDevice btdevice) {
+// deviceInfoPopUp shows a popup window to edit information.
+void deviceInfoPopUp(BuildContext context, BTDevice btdevice) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
