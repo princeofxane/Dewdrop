@@ -41,7 +41,6 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
     //TODO
     // run a search query to check if the value is present if yes allow this.
       // valueChoose ??= segments[0];
-
     valueChoose = segments[0];
 
 
