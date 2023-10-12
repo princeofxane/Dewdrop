@@ -120,7 +120,22 @@ class _PrimarySegmentEditState extends State<PrimarySegmentEdit> {
               alignment: Alignment.centerRight,
               child: InkWell(
                 onTap: () {
-                  print('Delete is pressed');
+                  bool hasDeleted = segmentsProvider.deleteSegment(widget.segment.id);
+
+                  if (!hasDeleted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Failed to delete segment'),
+                        )
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Segment has been deleted'),
+                        )
+                    );
+                  }
+                  Navigator.of(context).pop();
                 },
                 child: Container(
                   width: 80,
