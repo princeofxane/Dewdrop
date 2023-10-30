@@ -49,6 +49,7 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
     // valueChoose = segments.first;
 
 
+
     void loadDeviceWidgets() {
       setState(() {
         initialScreen = false;
