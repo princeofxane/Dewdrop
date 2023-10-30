@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
             /* ---------- Google sign in button ---------- */
             ElevatedButton(
               onPressed: () async {
-                signInWithGoogle();
+                // signInWithGoogle();
                 if(mounted) {
                   // Navigate user to device page.
                   Navigator.push(
