@@ -2,19 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/bt_device.dart';
 import '../models/schedule.dart';
+import '../models/sub_segment.dart';
 import 'package:collection/collection.dart';
-import 'dart:math';
+import '../utility/device_information.dart' as utility;
 
-/* ---------- random string generator ---------- */
-const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-Random _rnd = Random();
-
-String getRandomString(int length) => String.fromCharCodes(
-  Iterable.generate(
-    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))
-  )
-);
-/* --------------------------------------------- */
 
 class Segment {
   final String id;
@@ -28,24 +19,35 @@ class Segment {
     required this.isWorkersActive,
     required this.subsegments
   });
-}
 
-class SubSegment {
-  final String id;
-  final String name;
-  final bool isIndoor;
-  final bool isActiveAtNight;
-  BTDevice? btDevice;
-  Schedule? schedule;
+  Map<String, dynamic> _toMap() {
+    return {
+      'name': name,
+      'isWorkersActive': isWorkersActive,
+    };
+  }
+  //
+  dynamic get(String propertyName) {
+    var mapRep = _toMap();
+    if (mapRep.containsKey(propertyName)) {
+      return mapRep[propertyName];
+    }
+    throw ArgumentError('propery not found');
+  }
+  //
+  bool set(String propertyName, dynamic value) {
 
-  SubSegment({
-    required this.id,
-    required this.name,
-    required this.isIndoor,
-    required this.isActiveAtNight,
-    this.btDevice,
-    this.schedule
-  });
+    var mapRep = _toMap();
+    if (mapRep.containsKey(propertyName)) {
+      print('------abc--------');
+      print(mapRep[propertyName]);
+      print(value);
+      print('--------------');
+      // mapRep[propertyName] = value;
+    }
+    return true;
+  }
+
 }
 
 
@@ -56,52 +58,8 @@ class Segments with ChangeNotifier{
       name: 'House',
       isWorkersActive: true,
       subsegments: [
-        SubSegment(
-          id: 'hi12',
-          name: 'living room',
-          isIndoor: false,
-          isActiveAtNight: true,
-          btDevice: BTDevice(
-            id: 'ab12',
-            name: 'cat',
-            description: 'my device',
-            ipAddress: '192.168.1.25',
-            macAddress: '8c:73:6e:b7:13:f5',
-            isActive: true,
-            power: 56
-          ),
-          schedule: Schedule(
-            id: 'cd12',
-            name: 'Every day two hours',
-            duration: 10,
-            creationType: CreationTypes.preset,
-            periodTypes: PeriodTypes.daily,
-            frequencyTypes: FrequencyTypes.everyTwoHour
-          )
-        ),
-        SubSegment(
-          id: 'hi13',
-          name: 'balcony',
-          isIndoor: false,
-          isActiveAtNight: true,
-          btDevice: BTDevice(
-            id: 'ab12',
-            name: 'cat',
-            description: 'my device',
-            ipAddress: '192.168.1.25',
-            macAddress: '8c:73:6e:b7:13:f5',
-            isActive: true,
-            power: 56
-          ),
-          schedule: Schedule(
-            id: 'cd12',
-            name: 'Every day two hours',
-            duration: 10,
-            creationType: CreationTypes.preset,
-            periodTypes: PeriodTypes.daily,
-            frequencyTypes: FrequencyTypes.everyTwoHour
-          )
-        ),
+        SubSegments().subSegments[0],
+        SubSegments().subSegments[1],
       ]
     ),
     Segment(
@@ -109,29 +67,7 @@ class Segments with ChangeNotifier{
         name: 'Office',
         isWorkersActive: true,
         subsegments: [
-          SubSegment(
-              id: 'hi12',
-              name: 'living room',
-              isIndoor: false,
-              isActiveAtNight: true,
-              btDevice: BTDevice(
-                  id: 'ab12',
-                  name: 'cat',
-                  description: 'my device',
-                  ipAddress: '192.168.1.25',
-                  macAddress: '8c:73:6e:b7:13:f5',
-                  isActive: true,
-                  power: 56
-              ),
-              schedule: Schedule(
-                  id: 'cd12',
-                  name: 'Every day two hours',
-                  duration: 10,
-                  creationType: CreationTypes.preset,
-                  periodTypes: PeriodTypes.daily,
-                  frequencyTypes: FrequencyTypes.everyTwoHour
-              )
-          ),
+          SubSegments().subSegments[2],
         ]
     ),
     Segment(
@@ -139,61 +75,20 @@ class Segments with ChangeNotifier{
         name: 'Farm1',
         isWorkersActive: true,
         subsegments: [
-          SubSegment(
-              id: 'hi12',
-              name: 'Section A',
-              isIndoor: false,
-              isActiveAtNight: true,
-              btDevice: BTDevice(
-                  id: 'ab12',
-                  name: 'cat',
-                  description: 'my device',
-                  ipAddress: '192.168.1.25',
-                  macAddress: '8c:73:6e:b7:13:f5',
-                  isActive: true,
-                  power: 56
-              ),
-              schedule: Schedule(
-                  id: 'cd12',
-                  name: 'Every day two hours',
-                  duration: 10,
-                  creationType: CreationTypes.preset,
-                  periodTypes: PeriodTypes.daily,
-                  frequencyTypes: FrequencyTypes.everyTwoHour
-              )
-          ),
-          SubSegment(
-              id: 'hi13',
-              name: 'Section B',
-              isIndoor: false,
-              isActiveAtNight: true,
-              btDevice: BTDevice(
-                  id: 'ab12',
-                  name: 'cat',
-                  description: 'my device',
-                  ipAddress: '192.168.1.25',
-                  macAddress: '8c:73:6e:b7:13:f5',
-                  isActive: true,
-                  power: 56
-              ),
-              schedule: Schedule(
-                  id: 'cd12',
-                  name: 'Every day two hours',
-                  duration: 10,
-                  creationType: CreationTypes.preset,
-                  periodTypes: PeriodTypes.daily,
-                  frequencyTypes: FrequencyTypes.everyTwoHour
-              )
-          ),
+          SubSegments().subSegments[3],
+          SubSegments().subSegments[4],
         ]
     ),
   ];
+
 
   List<Segment> get getSegments {
     return [... segments];
   }
 
-  bool toggleWorker(String id, bool value) {
+
+  bool updateSegment(String id, Map<String, dynamic> updatedValues) {
+
     Segment? segment = segments.firstWhereOrNull((eachSegment) =>
     eachSegment.id == id,
     );
@@ -202,22 +97,23 @@ class Segments with ChangeNotifier{
       return false;
     }
 
-    segment.isWorkersActive = value;
+    updatedValues.forEach((key, value) {
+      // print("Key : $key, Value : $value");
+      switch (key) {
+        case 'name':
+          segment.name = utility.cast<String>(value)!;
+          break;
+        case 'isWorkersActive':
+          segment.isWorkersActive = utility.cast<bool>(value)!;
+          break;
+        default :
+          print('invalid field name provided');
+          break;
+      }
+      // segment.set(key, value);
+    });
 
-    return true;
-  }
-
-  bool changeName(String id, String name) {
-    Segment? segment = segments.firstWhereOrNull((eachSegment) =>
-      eachSegment.id == id,
-    );
-
-    if (segment == null) {
-      return false;
-    }
-
-    segment.name = name;
-
+    notifyListeners();
     return true;
   }
 
@@ -233,31 +129,20 @@ class Segments with ChangeNotifier{
     }
   }
 
-
   bool deleteSegment(String id) {
 
-    print('===================');
-    print('Before delete array');
-    print(segments.map((e) => print(e.name)));
-    print('===================');
-
     segments.removeWhere((eachSegment) =>
-    eachSegment.id == id,
+      eachSegment.id == id,
     );
-
-    print('===================');
-    print('After delete array');
-    print(segments.map((e) => print(e.name)));
-    print('===================');
 
     notifyListeners();
     return true;
   }
 
-    bool createSegment(String segmentName) {
+  bool createSegment(String segmentName) {
 
     Segment newSegment = Segment(
-      id: getRandomString(5),
+      id: utility.getRandomString(5),
       name: segmentName,
       subsegments: <SubSegment>[],
       isWorkersActive: false
@@ -267,7 +152,33 @@ class Segments with ChangeNotifier{
     notifyListeners();
     return true;
   }
+
 }
-// if (eachSegment.id == id) {
-// eachSegment.name = name;
+// bool toggleWorker(String id, bool value) {
+//   Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+//   eachSegment.id == id,
+//   );
+//
+//   if (segment == null) {
+//     return false;
+//   }
+//
+//   segment.isWorkersActive = value;
+//
+//   return true;
 // }
+
+// bool changeName(String id, String name) {
+//   Segment? segment = segments.firstWhereOrNull((eachSegment) =>
+//     eachSegment.id == id,
+//   );
+//
+//   if (segment == null) {
+//     return false;
+//   }
+//
+//   segment.name = name;
+//
+//   return true;
+// }
+

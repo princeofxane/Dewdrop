@@ -21,7 +21,10 @@ class _DeviceDetailState extends State<DeviceDetail> {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15)
+        borderRadius: BorderRadius.circular(15),
+        side: const BorderSide(
+          color: Colors.black45,
+        ),
       ),
       // borderOnForeground: true,
       child: Padding(
@@ -32,15 +35,23 @@ class _DeviceDetailState extends State<DeviceDetail> {
             ExpansionPanel(
               headerBuilder: (context, isExpanded) {
                 return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('data'),
                     InkWell(
                       onTap: (){},
                       child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent)
+                            // border: Border.all(color: Colors.blueAccent)
                         ),
-                        child: Text('info'),
+                        child: Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            // border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: const Icon(Icons.info_outline_rounded)
+                        ),
                       ),
                     )
                   ],

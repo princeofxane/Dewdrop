@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../models/bt_device.dart';
+import 'package:collection/collection.dart';
 
 class BTDevice {
   final String id;
@@ -53,81 +53,21 @@ class BTDevices with ChangeNotifier{
         isActive: true,
         power: 25
     ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
-    BTDevice(
-        id: 'ab34',
-        name: 'mouse',
-        description: 'my device',
-        ipAddress: '192.168.1.27',
-        macAddress: '8c:73:6e:b7:13:f7',
-        isActive: true,
-        power: 25
-    ),
   ];
 
   List<BTDevice> get getDevices {
     return [... devices];
+  }
+
+  BTDevice getDevice(String name) {
+    BTDevice? btDevice = devices.firstWhereOrNull((eachBTDevice) =>
+      eachBTDevice.name == name,
+    );
+
+    if (btDevice == null) {
+      throw ArgumentError('device not found.');
+    } else {
+      return btDevice;
+    }
   }
 }

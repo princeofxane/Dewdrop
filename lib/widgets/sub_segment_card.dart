@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/segment.dart';
+import '../models/sub_segment.dart';
+import '../screens/sub_segment_edit.dart';
 
 class SubSegmentDetail extends StatefulWidget {
   final SubSegment subsegment;
@@ -19,37 +20,47 @@ class _SubSegmentDetailState extends State< SubSegmentDetail> {
     // Create a drop down list.
     return Align(
       alignment: Alignment.centerLeft,
-      child: Container(
-        height: 53,
-        width: screenWidth * 0.3,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(20)
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 25),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(widget.subsegment.name),
-            Align(
-              alignment: Alignment.centerRight,
-              child: InkWell(
-                onTap: (){
-                  print('edit');
-                },
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(20)
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 5),
+        child: Container(
+          height: 53,
+          width: screenWidth * 0.6,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(20)
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.subsegment.name),
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => SubSegmentEdit(
+                                subSegment: widget.subsegment
+                            )
+                        )
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Icon(Icons.edit)
                   ),
-                  child: Icon(Icons.edit)
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
+        ),
       ),
     );
   }

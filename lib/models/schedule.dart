@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import '../models/bt_device.dart';
 
 enum Days {
@@ -91,7 +92,19 @@ class Schedules with ChangeNotifier{
     ),
   ];
 
-List<Schedule> get getSchedules {
-  return [... schedules];
+  List<Schedule> get getSchedules {
+    return [... schedules];
+  }
+
+  Schedule getSchedule(String name) {
+    Schedule? schedule = schedules.firstWhereOrNull((eachSchedule) =>
+    eachSchedule.name == name,
+    );
+
+    if (schedule == null) {
+      throw ArgumentError('schedule not found.');
+    } else {
+      return schedule;
+    }
   }
 }
