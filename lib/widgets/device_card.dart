@@ -37,7 +37,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('data'),
+                    Text(widget.btdevice.id),
                     InkWell(
                       onTap: (){},
                       child: Container(

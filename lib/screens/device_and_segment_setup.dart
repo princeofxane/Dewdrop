@@ -2,6 +2,7 @@ import 'package:dewdrop/models/bt_device.dart';
 import 'package:dewdrop/models/segment.dart';
 import 'package:dewdrop/models/sub_segment.dart';
 import 'package:dewdrop/screens/primary_segment_edit.dart';
+import 'package:dewdrop/screens/sub_segment_create.dart';
 import 'package:dewdrop/widgets/device_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,9 @@ class DeviceSetupScreen extends StatefulWidget {
 
 class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
 
+  String primarySegmentName = '';
   bool initialScreen = true;
-  Segment? valueChoose;
+  String selectedSegmentId = '';
   int segmentIndex = 0;
   List<SubSegment> subSegments = [];
   int tabIndex = 0;
@@ -38,6 +40,10 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
     // Get the segments.
     final segmentData = Provider.of<Segments>(context, listen: true);
     final segments = segmentData.segments;
+
+    if(selectedSegmentId == '') {
+      selectedSegmentId = segments.first.id;
+    }
 
 
     final subSegmentData = Provider.of<SubSegments>(context, listen: true);
@@ -185,20 +191,29 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 icon: const Icon(Icons.arrow_drop_down),
                                 iconSize: 36,
-                                hint: Text('Select a Segment'),
+                                hint: const Text('Select a Segment'),
                                 // isExpanded: true,
-                                value: valueChoose,
-                                onChanged: (Segment? newValue) {
+                                value: selectedSegmentId,
+                                // value: <String>(){
+                                //   if(selectedSegmentId == '') {
+                                //     return 'SomeValue';
+                                //   }
+                                //   return selectedSegmentId;
+                                // }(),
+                                onChanged: (String? newValue) {
                                   setState(() {
                                     if (newValue == null) return;
-                                    valueChoose = newValue;
-                                    segmentIndex = segments.indexOf(newValue);
+                                    selectedSegmentId = newValue;
+                                    segmentIndex = segments.indexWhere((eachSegment) =>
+                                      eachSegment.id == newValue
+                                    );
+                                    primarySegmentName = segments[segmentIndex].name;
                                     subSegments = segments[segmentIndex].subsegments;
                                   });
                                 },
                                 items: segments.map((segment) {
                                   return DropdownMenuItem(
-                                      value: segment,
+                                      value: segment.id,
                                       child: Text(segment.name)
                                   );
                                 }).toList(),
@@ -261,7 +276,15 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                           //   child: Text('test')),
                           InkWell(
                             onTap: () {
-                              print('edit');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SubSegmentCreate(
+                                    primarySegmentId: selectedSegmentId,
+                                    primarySegmentName: primarySegmentName,
+                                  )
+                                )
+                              );
                             },
                             child: Container(
                                 decoration: BoxDecoration(

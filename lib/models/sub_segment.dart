@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/bt_device.dart';
+import '../models/segment.dart';
 import '../models/schedule.dart';
 import 'package:collection/collection.dart';
 import '../utility/device_information.dart' as utility;
@@ -159,6 +160,104 @@ class SubSegments with ChangeNotifier{
   //     print(e.name);
   //   });
   // }
+
+  bool createSubSegment(String primarySegmentId, Map<String, dynamic> updatedValues) {
+    // Create a subsegment with the provided values.
+    String ssName = () {
+      String? value = utility.cast<String>(updatedValues['name']);
+
+      if (value != null) {
+        return value;
+      }
+
+      return '';
+    }();
+
+    bool ssIndoor = () {
+      bool? value = utility.cast<bool>(updatedValues['isIndoor']);
+
+      if (value != null) {
+        return value;
+      }
+
+      return false;
+    }();
+
+    bool ssWorkerActiveAtNight = () {
+      bool? value = utility.cast<bool>(updatedValues['isActiveAtNight']);
+
+      if (value != null) {
+        return value;
+      }
+
+      return false;
+    }();
+
+    bool ssWorkerActive = () {
+      bool? value = utility.cast<bool>(updatedValues['isWorkerActive']);
+
+      if (value != null) {
+        return value;
+      }
+
+      return false;
+    }();
+
+    BTDevice? ssBTDevice = () {
+      String? value = utility.cast<String>(updatedValues['deviceSelection']);
+
+      if (value != null) {
+        BTDevice? device = BTDevices().devices.firstWhere((eachDevice) => eachDevice.id == value);
+        return device;
+      }
+
+    }();
+
+    Schedule? ssSchedule = () {
+      String? value = utility.cast<String>(updatedValues['scheduleSelection']);
+
+      if (value != null) {
+        Schedule? schedule = Schedules().schedules.firstWhere((eachSchedule) => eachSchedule.id == value);
+        return schedule;
+      }
+
+    }();
+
+    SubSegment newSubSegment = SubSegment(
+      id: utility.getRandomString(3),
+      name: ssName,
+      isIndoor: ssIndoor,
+      isActiveAtNight: ssWorkerActiveAtNight,
+      isWorkerActive: ssWorkerActive,
+      btDevice: ssBTDevice,
+      schedule: ssSchedule,
+    );
+
+    subSegments.add(
+      newSubSegment
+    );
+
+    // subSegments.forEach((eachSubSegment) {
+    //   print('--------------subsegment-------------');
+    //   print(eachSubSegment.name);
+    // });
+    int indexOfNewSubSegment = subSegments.indexOf(newSubSegment);
+
+    //Get the segment.
+    Segment? neededSegment = Segments().segments.firstWhereOrNull((eachSegment) =>
+      eachSegment.id == primarySegmentId,
+    );
+
+    if(neededSegment == null) {
+      return false;
+    }
+
+    neededSegment.subsegments.add(newSubSegment);
+    //Append the newSubSegment.
+
+    notifyListeners();
+    return true;
+  }
 
   bool updateSubSegment(String id, Map<String, dynamic> updatedValues) {
 
